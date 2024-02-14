@@ -10,6 +10,9 @@ Chat TTS for your streams.
 - [x] User filtering.
 - [x] Persistent settings.
 - [x] Pause/Resume chat reading.
+- [x] Ignore bot messages.
+- [x] Volume control.
+- [x] Max message length control.
 
 ## Usage
 
