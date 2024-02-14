@@ -24,10 +24,8 @@
             </div>
 
             <div class="section">
-                <span class="label">Voice</span>
-
-                <select id="voiceSelect">
-                </select>
+                <span class="label">Max message length</span>
+                <input type="text" id="maxLengthInput" type="number">
             </div>
 
             <div class="section">
@@ -35,11 +33,24 @@
 
                 <select id="filterSelect">
                     <option value="all">All</option>
+                    <option value="all-nb">All (Ignore bots)</option>
                     <option value="sub">Subscribers only</option>
                     <option value="vip">VIP only</option>
                     <option value="mod">Moderators only</option>
                     <option value="streamer">Streamer only</option>
                 </select>
+            </div>
+
+            <div class="section">
+                <span class="label">Voice</span>
+
+                <select id="voiceSelect">
+                </select>
+            </div>
+
+            <div class="section">
+                <span class="label">Volume</span>
+                <input type="range" id="volumeInput" min="0" max="100" value="100">
             </div>
 
             <div class="section">

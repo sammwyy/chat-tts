@@ -3,6 +3,8 @@ const App = {
   voice: getConfig("voice", 0),
   cooldown: getConfig("cooldown", 0),
   filter: getConfig("filter", "all"),
+  maxLength: getConfig("maxLength", 400),
+  volume: getConfig("volume", 100),
   started: false,
   lastSpoken: 0,
 
@@ -47,6 +49,23 @@ App.connect = async function (username) {
       const isMod = tags.mod;
       const isVIP = tags.badges.vip;
       const isSub = tags.subscriber;
+      const isBOT =
+        tags.username == "nightbot" ||
+        tags.username == "streamelements" ||
+        tags.username == "streamlabs" ||
+        tags.username == "moobot";
+
+      if (speechSynthesis.speaking) {
+        return;
+      }
+
+      if (!message || message.length > App.maxLength) {
+        return;
+      }
+
+      if (filter === "all-nb" && isBOT) {
+        App.speakWithCooldown(message);
+      }
 
       if (filter === "streamer" && !isStreamer) {
         return;
@@ -96,6 +115,9 @@ App.speak = function (text) {
 
   // Create a SpeechSynthesisUtterance
   const utterance = new SpeechSynthesisUtterance(text);
+
+  // Set volume
+  utterance.volume = App.volume / 100;
 
   // Select a voice
   const voices = speechSynthesis.getVoices();

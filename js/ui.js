@@ -19,6 +19,8 @@ const logoutBTN = document.getElementById("logoutBTN");
 const startBTN = document.getElementById("startBTN");
 const usernameInput = document.getElementById("usernameInput");
 const cooldownInput = document.getElementById("cooldownInput");
+const maxLengthInput = document.getElementById("maxLengthInput");
+const volumeInput = document.getElementById("volumeInput");
 const voiceSelect = document.getElementById("voiceSelect");
 const filterSelect = document.getElementById("filterSelect");
 const previewBTN = document.getElementById("previewBTN");
@@ -53,10 +55,35 @@ cooldownInput.addEventListener("change", (e) => {
   }
 });
 
+maxLengthInput.value = App.maxLength;
+maxLengthInput.addEventListener("change", (e) => {
+  const value = e.target.value.trim();
+  const valid = !isNaN(value) && value >= 0;
+
+  if (valid) {
+    App.maxLength = maxLengthInput.value;
+    setConfig("maxLength", App.maxLength);
+  } else {
+    maxLengthInput.value = App.maxLength;
+  }
+});
+
+volumeInput.value = App.volume;
+volumeInput.addEventListener("change", (e) => {
+  const value = e.target.value.trim();
+  const valid = !isNaN(value) && value >= 0 && value <= 100;
+
+  if (valid) {
+    App.volume = volumeInput.value;
+    setConfig("volume", App.volume);
+  } else {
+    volumeInput.value = App.volume;
+  }
+});
+
 voiceSelect.addEventListener("change", (e) => {
   App.voice = parseInt(e.target.value);
 });
-
 window.speechSynthesis.onvoiceschanged = () => {
   const voices = App.getVoices();
   voices.forEach((voice, i) => {
@@ -68,7 +95,6 @@ window.speechSynthesis.onvoiceschanged = () => {
 };
 
 filterSelect.value = App.filter;
-
 filterSelect.addEventListener("change", (e) => {
   App.setFilter(e.target.value);
 });
