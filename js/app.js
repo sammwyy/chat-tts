@@ -43,11 +43,13 @@ App.connect = async function (username) {
   });
 
   client.on("message", (channel, tags, message, self) => {
+    const badges = tags.badges || [];
+    
     if (App.started) {
       const filter = App.filter;
       const isStreamer = tags.username === username;
       const isMod = tags.mod;
-      const isVIP = tags.badges.vip;
+      const isVIP = badges.vip;
       const isSub = tags.subscriber;
       const isBOT =
         tags.username == "nightbot" ||
